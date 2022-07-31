@@ -1,5 +1,7 @@
 # mate-engine-test
 
+[![ct](https://github.com/komori-n/mate-engine-test/actions/workflows/ct.yaml/badge.svg?branch=main)](https://github.com/komori-n/mate-engine-test/actions/workflows/ct.yaml)
+
 A simple test application for Shogi mate engines (like [KomoringHeights](https://github.com/komori-n/KomoringHeights)).
 
 ## Usage

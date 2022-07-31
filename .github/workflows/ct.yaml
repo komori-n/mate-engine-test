@@ -1,0 +1,42 @@
+name: ct
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mate-engine-test
+        uses: actions/checkout@v3
+
+      - name: Checkout KomoringHeights
+        uses: actions/checkout@v3
+        with:
+          repository: komori-n/KomoringHeights.git
+          path: KomoringHeights
+          ref: master
+
+      - name: Setup environment
+        run: |
+          sudo apt-get update && sudo apt-get -y install build-essential g++ npm
+          sudo npm install -g @bazel/bazelisk
+
+      - name: Build KomoringHeights
+        run: |
+          pushd KomoringHeights/source
+          make -j4 normal TARGET_CPU=SSE42 COMPILER=g++ YANEURAOU_EDITION=USER_ENGINE
+          popd
+
+      - name: Run tests
+        run: |
+          bazelisk run :gazelle
+          bazelisk run --run_under="cd $PWD &&" \
+            cmd/mate-engine-test:mate-engine-test -- \
+            -e KomoringHeights/source/KomoringHeights-by-gcc \
+            -f tests/tests.yaml \
+            --exit-on-fail
