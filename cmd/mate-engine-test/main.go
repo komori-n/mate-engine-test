@@ -189,8 +189,11 @@ func workerMain(en *engine.Engine,
 				err = res.error
 			} else {
 				if res.MateInfo.Mate != !tc.NoMate {
-					err = fmt.Errorf("Expected '%s' but got '%s'",
+					err = fmt.Errorf("expected '%s' but got '%s'",
 						mateString(!tc.NoMate), mateString(res.MateInfo.Mate))
+				} else if res.MateInfo.Mate && tc.MinMateLen > 0 && res.MateInfo.Len < tc.MinMateLen {
+					err = fmt.Errorf("expected min-mate-len is '%d' but got '%d'",
+						tc.MinMateLen, res.MateInfo.Len)
 				}
 			}
 

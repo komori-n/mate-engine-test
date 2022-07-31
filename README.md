@@ -39,6 +39,9 @@ basic:
     # Non-mate positions are also testable
     - sfen: 6R+P1/8k/7sp/9/9/9/9/9/9 b r2b4g3s4n4l16p 1
       nomate: true
+    # length of mate is not less than 3
+    - sfen: 9/8k/9/8P/9/9/9/9/9 b 2G2r2b2g4s4n4l17p 1
+      min_mate_len: 3
 ```
 
 ### Options

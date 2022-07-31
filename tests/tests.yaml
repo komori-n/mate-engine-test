@@ -13,6 +13,17 @@ basic:
     - sfen: 4k4/9/4P4/9/9/9/9/9/9 b G2r2b3g4s4n4l17p 1
     # Obvious mate(reversed)
     - sfen: 9/9/9/9/9/9/4p4/9/4K4 w 2R2BG4S4N4L3g17p 1
+
+nomate:
+  time_limit: 100
+  engine_opts:
+    USI_Hash: 128
+    PostSearchCount: 0
+    RootIsAndNodeIfChecked: true
+    PvInterval: 0
+    YozumePrintLevel: 0
+
+  tests:
     # Obvious nomate
     - sfen: lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1
       nomate: true
@@ -20,13 +31,19 @@ basic:
     - sfen: 6R+P1/8k/7sp/9/9/9/9/9/9 b r2b4g3s4n4l16p 1
       nomate: true
 
-empty:
+min-mate-len:
   time_limit: 100
   engine_opts:
-    USI_Hash: 64
+    USI_Hash: 128
     PostSearchCount: 0
-    RootIsAndNodeIfChecked: false
+    RootIsAndNodeIfChecked: true
     PvInterval: 0
     YozumePrintLevel: 0
 
   tests:
+    # min mate len is 3
+    - sfen: 9/8k/9/8P/9/9/9/9/9 b 2G2r2b2g4s4n4l17p 1
+      min_mate_len: 3
+    # min mate len is 15
+    - sfen: 7gk/9/6P1+P/9/9/9/9/9/9 b GSP2r2b2g3s4n4l15p 1
+      min_mate_len: 15

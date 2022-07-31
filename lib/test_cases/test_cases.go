@@ -5,8 +5,9 @@ import (
 )
 
 type TestCase struct {
-	Sfen   string `yaml:"sfen"`
-	NoMate bool   `yaml:"nomate"`
+	Sfen       string `yaml:"sfen"`
+	NoMate     bool   `yaml:"nomate"`
+	MinMateLen int    `yaml:"min_mate_len"`
 }
 
 type TestSet struct {

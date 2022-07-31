@@ -50,14 +50,16 @@ hoge:
 	assert.Equal(t, len(ts["hoge"].Tests), 1)
 	assert.Equal(t, ts["hoge"].Tests[0].Sfen, "334")
 	assert.False(t, ts["hoge"].Tests[0].NoMate)
+	assert.Equal(t, ts["hoge"].Tests[0].MinMateLen, 0)
 }
 
-func TestTestSet_TestsNoMate(t *testing.T) {
+func TestTestSet_TestsOptionals(t *testing.T) {
 	ts, err := Decode(`---
 hoge:
     tests:
         - sfen: 264
           nomate: true
+          min_mate_len: 334
 `)
 	assert.Nil(t, err)
 
@@ -66,4 +68,5 @@ hoge:
 	assert.Equal(t, len(ts["hoge"].Tests), 1)
 	assert.Equal(t, ts["hoge"].Tests[0].Sfen, "264")
 	assert.True(t, ts["hoge"].Tests[0].NoMate)
+	assert.Equal(t, ts["hoge"].Tests[0].MinMateLen, 334)
 }
