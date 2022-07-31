@@ -33,6 +33,7 @@ func main() {
 	exit_on_fail := flag.Bool("exit-on-fail", true, "exit immediately after mate failure")
 	test_files := flag.StringArrayP("test-files", "f", []string{}, "test specification files")
 	engine_path := flag.StringP("engine", "e", "", "engine path")
+	time_limit := flag.IntP("time-limit", "t", 7*24*3600*1000, "time limit for each test case(ms)")
 
 	flag.Parse()
 	if len(*test_files) == 0 {
@@ -96,7 +97,7 @@ func main() {
 		}
 
 		for key, ts := range ts_map {
-			err = testMain(engines, key, &ts, *exit_on_fail)
+			err = testMain(engines, key, &ts, *time_limit, *exit_on_fail)
 		}
 	}
 }
@@ -104,6 +105,7 @@ func main() {
 func testMain(engines [](*engine.Engine),
 	tc_name string,
 	ts *test_cases.TestSet,
+	time_limit int,
 	exit_on_fail bool) error {
 	desc := fmt.Sprintf("[cyan]%s[reset]", tc_name)
 	bar := progressbar.NewOptions(len(ts.Tests),
@@ -123,7 +125,11 @@ func testMain(engines [](*engine.Engine),
 	tc_chan := make(chan test_cases.TestCase)
 	for _, en := range engines {
 		en.Set(ts.Opts)
-		go workerMain(en, &wg, tc_chan, ts.TimeLimit, exit_on_fail)
+		tc_time_limit := time_limit
+		if ts.TimeLimit > 0 {
+			tc_time_limit = ts.TimeLimit
+		}
+		go workerMain(en, &wg, tc_chan, tc_time_limit, exit_on_fail)
 	}
 
 	for _, tc := range ts.Tests {
@@ -167,6 +173,7 @@ func workerMain(en *engine.Engine,
 			*engine.MateInfo
 			error
 		})
+
 		timer := time.NewTicker(time.Millisecond * time.Duration(time_limit))
 		go func() {
 			mi, err2 := en.Solve(tc.Sfen)

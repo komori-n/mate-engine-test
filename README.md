@@ -45,6 +45,7 @@ basic:
 * `-e`, `--engine`: Path to a mate engine.
 * `-f`, `--test-files`: Path to test sets(see below). It can be used multiple times.
 * `-p`, `--process`: Number of processes for testing.
+* `-t`, `--time-limit`: Time limit for each test case(ms).
 * `--exit-on-fail`: Exit immediately if one test fails.
 
 ## Build
