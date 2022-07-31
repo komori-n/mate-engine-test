@@ -9,7 +9,7 @@ You can test mate engines like the following command:
 ```sh
 $ mate-engine-test -e KomoringHeights-by-gcc -f tests/tests.yaml
 - num_process:  8
-- test_file:  ./tests/*
+- test_file:  ./tests/tests.yaml
 - engine: KomoringHeightss-by-gcc(...)
 basic 100% |██████████████████████████████| (4/4)
 ```
