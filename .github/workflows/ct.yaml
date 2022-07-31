@@ -35,6 +35,7 @@ jobs:
       - name: Run tests
         run: |
           bazelisk run :gazelle
+          bazelisk test --test_timeout 5 //...
           bazelisk run --run_under="cd $PWD &&" \
             cmd/mate-engine-test:mate-engine-test -- \
             -e KomoringHeights/source/KomoringHeights-by-gcc \
