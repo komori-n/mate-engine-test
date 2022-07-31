@@ -22,6 +22,7 @@ Test sets can be specified in `.yaml` with the following format:
 # Define test set
 basic:
   # Time limit for each problem(ms)
+  # This value overwrites global time limit(-t, --time-limit)
   time_limit: 100
 
   # Engine options. These values are directly passed to the engine
