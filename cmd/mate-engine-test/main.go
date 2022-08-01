@@ -129,12 +129,11 @@ func testMain(engines [](*engine.Engine),
 		if ts.TimeLimit > 0 {
 			tc_time_limit = ts.TimeLimit
 		}
-		go workerMain(en, &wg, tc_chan, tc_time_limit, exit_on_fail)
+		go workerMain(en, &wg, bar, tc_chan, tc_time_limit, exit_on_fail)
 	}
 
 	for _, tc := range ts.Tests {
 		tc_chan <- tc
-		bar.Add(1)
 	}
 
 	close(tc_chan)
@@ -144,6 +143,7 @@ func testMain(engines [](*engine.Engine),
 
 func workerMain(en *engine.Engine,
 	wg *sync.WaitGroup,
+	bar *progressbar.ProgressBar,
 	tc_chan chan test_cases.TestCase,
 	time_limit int,
 	exit_on_fail bool) {
@@ -208,6 +208,8 @@ func workerMain(en *engine.Engine,
 				os.Exit(1)
 			}
 		}
+
+		bar.Add(1)
 	}
 }
 
