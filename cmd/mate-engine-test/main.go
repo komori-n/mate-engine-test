@@ -51,6 +51,8 @@ func main() {
 		errorExit(message)
 	}
 
+	*test_files = append(*test_files, flag.Args()...)
+
 	fmt.Println("## Parameters")
 	fmt.Println("- num_process: ", *num_process)
 	fmt.Println("- test_file: ", strings.Join(*test_files, ", "))
