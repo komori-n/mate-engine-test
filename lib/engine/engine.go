@@ -41,6 +41,8 @@ func New(command string, args ...string) (*Engine, error) {
 }
 
 func (en *Engine) Set(opts map[string]string) error {
+	fmt.Fprintf(en.writer, "setoption name Threads value 1\n")
+	fmt.Fprintf(en.writer, "setoption name PostSearchLevel value None\n")
 	for k, v := range opts {
 		fmt.Fprintf(en.writer, "setoption name %s value %s\n", k, v)
 	}
